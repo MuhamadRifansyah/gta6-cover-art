@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Coast Cover Studio — GTA-style cover art maker</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1 class="brand">Vice Coast <span>Cover Studio</span></h1>
+  <p class="tagline">Turn any photo into GTA-style cover art. Offline, no upload, export a PNG to share.</p>
+  <div class="history">
+    <button id="undoButton" type="button" title="Undo (Ctrl+Z)">↶ Undo</button>
+    <button id="redoButton" type="button" title="Redo (Ctrl+Shift+Z)">↷ Redo</button>
+  </div>
+</header>
+<main class="studio">
+  <aside class="panel panel-left" aria-label="Photos, layouts and grades">
+    <section class="group" aria-labelledby="photosHeading">
+      <h2 id="photosHeading">1 · Photos</h2>
+      <p class="hint">Add your photos, click one, then click a panel to put it there. Drag a panel to pan, scroll to zoom.</p>
+      <label class="uploadButton">＋ Add photos
+        <input id="photoUpload" type="file" accept="image/*" multiple>
+      </label>
+      <div id="photoTray" class="photoTray" role="listbox" aria-label="Loaded photos"></div>
+      <div class="row">
+        <button id="fillAllButton" type="button">Fill all panels with this photo</button>
+        <button id="shuffleButton" type="button">Shuffle photos</button>
+      </div>
+    </section>
+    <section class="group" aria-labelledby="layoutHeading">
+      <h2 id="layoutHeading">2 · Layout</h2>
+      <div id="layoutPicker" class="layoutPicker"></div>
+    </section>
+    <section class="group" aria-labelledby="gradeHeading">
+      <h2 id="gradeHeading">3 · Colour grade</h2>
+      <div id="gradePicker" class="gradePicker"></div>
+      <label class="sliderLabel">Grade intensity
+        <input id="gradeIntensity" type="range" min="0" max="100" value="80">
+      </label>
+    </section>
+    <section class="group" aria-labelledby="cropHeading">
+      <h2 id="cropHeading">Selected panel</h2>
+      <p class="hint" id="selectedPanelLabel">Panel 1</p>
+      <label class="sliderLabel">Zoom
+        <input id="panelZoom" type="range" min="50" max="300" value="100">
+      </label>
+      <div class="row">
+        <button id="fitFillButton" type="button">Fill / Fit</button>
+        <button id="centerButton" type="button">Centre photo</button>
+      </div>
+    </section>
+  </aside>
+
+  <section class="stage" aria-label="Live preview">
+    <div class="canvasWrap">
+      <canvas id="coverCanvas" width="1080" height="1080" aria-label="Live cover preview"></canvas>
+      <p class="stageHint">Click a panel to select it · drag to pan · scroll to zoom</p>
+    </div>
+    <div class="sizeRow" role="group" aria-label="Cover size">
+      <span>Cover size:</span>
+      <button id="sizeSquare" type="button" data-size="1080x1080" class="sizeButton active">1080 × 1080</button>
+      <button id="sizePortrait" type="button" data-size="1080x1350" class="sizeButton">1080 × 1350</button>
+      <button id="sizeLandscape" type="button" data-size="1920x1080" class="sizeButton">1920 × 1080</button>
+    </div>
+  </section>
+
+  <aside class="panel panel-right" aria-label="Caption, effects and export">
+    <section class="group" aria-labelledby="captionHeading">
+      <h2 id="captionHeading">4 · Caption</h2>
+      <label class="fieldLabel">Title
+        <input id="titleInput" type="text" maxlength="24" value="NEON SHORE">
+      </label>
+      <label class="fieldLabel">Subtitle
+        <input id="subtitleInput" type="text" maxlength="40" value="vice coast nights">
+      </label>
+      <label class="checkLabel"><input id="gradientText" type="checkbox" checked> Sunset-gradient title</label>
+      <label class="fieldLabel">Title position
+        <select id="titlePosition">
+          <option value="bottom" selected>Bottom band</option>
+          <option value="top">Top band</option>
+          <option value="diagonal">Diagonal banner</option>
+        </select>
+      </label>
+      <label class="fieldLabel">Badge ribbon
+        <input id="badgeInput" type="text" maxlength="24" value="VICE COAST · 2026">
+      </label>
+      <label class="sliderLabel">Heat meter
+        <input id="heatInput" type="range" min="1" max="5" step="1" value="4">
+      </label>
+    </section>
+    <section class="group" aria-labelledby="effectsHeading">
+      <h2 id="effectsHeading">5 · Effects</h2>
+      <label class="checkLabel"><input id="effectGrain" type="checkbox" checked> Film grain</label>
+      <label class="checkLabel"><input id="effectVignette" type="checkbox" checked> Vignette</label>
+      <label class="checkLabel"><input id="effectHalftone" type="checkbox" checked> Halftone title block</label>
+      <label class="checkLabel"><input id="effectBadge" type="checkbox" checked> Badge ribbon</label>
+      <label class="checkLabel"><input id="effectHeat" type="checkbox" checked> Star heat-meter</label>
+    </section>
+    <section class="group exportGroup" aria-labelledby="exportHeading">
+      <h2 id="exportHeading">6 · Export PNG</h2>
+      <button id="exportSquare" type="button" class="exportButton">Export 1080 × 1080</button>
+      <button id="exportPortrait" type="button" class="exportButton">Export 1080 × 1350</button>
+      <button id="exportLandscape" type="button" class="exportButton">Export 1920 × 1080</button>
+      <p id="exportStatus" role="status"></p>
+    </section>
+  </aside>
+</main>
+<footer class="footnote">Original art only — no Rockstar Games logo, artwork or font. Anton &amp; Pacifico under the SIL Open Font License. Photos stay on your machine.</footer>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
